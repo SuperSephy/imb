@@ -99,7 +99,63 @@ imb.decode("ATTFAATTFTADFDATDDADAATTTTTTTTADFFFFFDFAFATTDAADATDDDTADAFFDFDTFT", 
 });
 ```
 
-## Support on Beerpay
+## CLI
+
+I have included a basic CLI that should help easily encode or decode single records.
+
+| Option        | Descriptive   | Abbreviated   | Meaning                                               |
+|---------------|---------------|:-------------:| ------------------------------------------------------|
+| Type          | --type        | -t            | "encode" or "decode"                                      |
+| Barcode       | --barcode     | -b            | Automatically set type to 'decode' and decode value   |
+
+
+You should be able to encode an object using:
+
+```shell
+$ imb
+? Would you like to encode or decode an IMB? (Use arrow keys)
+    encode
+  ❯ decode
+? Delivery Point 2-Characters (Optional):
+? Zip (Optional):
+? Zip Plus 4 (Optional):
+? Barcode ID: 12
+? Service Type: 234
+? USPS Mailer ID: 567094
+? USPS Serial Number: 987654321
+
+Encoded output
+     ATTFAATTFTADFDATDDADAATTTTTTTTADFFFFFDFAFATTDAADATDDDTADAFFDFDTFT
+```
+
+And decoding an object is even easier:
+```shell
+$ imb
+? Would you like to encode or decode an IMB? (Use arrow keys)
+    encode
+  ❯ decode
+? Barcode String: ATTFAATTFTADFDATDDADAATTTTTTTTADFFFFFDFAFATTDAADATDDDTADAFFDFDTFT
+
+Decoded output
+     barcode_id:     12
+     service_type:   234
+     mailer_id:      567094
+     serial_num:     987654321
+```
+
+Alternatively, Decoding is the default behavior so you can simply run:
+```shell
+$ imb ATTFAATTFTADFDATDDADAATTTTTTTTADFFFFFDFAFATTDAADATDDDTADAFFDFDTFT
+
+Decoded output
+	barcode_id:	12
+	service_type:	234
+	mailer_id:	567094
+	serial_num:	987654321
+```
+
+## Support
+
 Hey,
  
 I hope that you were able to find this module helpful.

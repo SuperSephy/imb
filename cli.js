@@ -2,7 +2,7 @@ import arg from 'arg';
 import inquirer from 'inquirer';
 import _ from 'underscore';
 
-import imb from "./index";
+import imb from "./src";
 
 /**
  * This is the primary CLI
@@ -14,12 +14,13 @@ export async function cli(args) {
     options = await promptForMissingOptions(options);
     options = await promptForSpecifics(options);
 
-    console.log(options);
-
     if (options.type === 'decode') {
         try {
             console.log("\nDecoded output");
-            _.each(imb.decode(options.barcode), (value, key) => console.log('\t', key, ':\t', value))
+            _.each(imb.decode(options.barcode), (value, key) => {
+                const left_padding = key.length > 8 ? '\t' : '\t\t';
+                console.log(`\t${ key }:${ left_padding }${ value }`)
+            })
         } catch (ex) {
             console.error(ex.message);
         }
@@ -39,6 +40,10 @@ function parseArgumentsIntoOptions(rawArgs) {
 
     const args = arg(
         {
+            // Type
+            '--type': String,
+            '-t': '--type',
+
             // Decode: IMB String
             '--barcode': String,
             '-b': '--barcode',
@@ -52,60 +57,49 @@ function parseArgumentsIntoOptions(rawArgs) {
         }
     );
     return {
+        type:       args['--type'],
         barcode:    args._[0] || args['--barcode'] || false,
         input:      args['--imb'] || false,
     };
 }
 
 async function promptForMissingOptions(options) {
-
-    if (options.barcode) {
-        options.type = "barcode"
-    }
-
-    if (options.input) {
-        options.type = "input"
-    }
-
     const questions = [];
 
-    const DEFAULT_ACTION = 'decode';
+    if (!options.type && options.barcode) {
+        options.type = "decode"
+    }
+
+    if (!options.type && options.input) {
+        options.type = "encode"
+    }
+
+    const DEFAULT_ACTION = options.type || 'decode';
     if (!options.type) {
         questions.push({
             type: 'list',
             name: 'type',
             message: 'Would you like to encode or decode an IMB?',
-            choices: ['encode', 'decode'],
+            choices: ['decode', 'encode'],
             default: DEFAULT_ACTION,
         });
     }
 
-    // if (!options.git) {
-    //     questions.push({
-    //         type: 'confirm',
-    //         name: 'git',
-    //         message: 'Initialize a git repository?',
-    //         default: false,
-    //     });
-    // }
-
     const answers = await inquirer.prompt(questions);
     return {
         ...options,
-        type: options.type || answers.type,
-        // git: options.git || answers.git,
+        type: options.type || answers.type
     };
 }
 
 async function promptForSpecifics(options) {
     const questions = [];
 
-    if (options.type === 'decode') {
+    if (options.type === 'decode' && !options.barcode) {
         questions.push({
             type: 'input',
             name: 'barcode',
             message: 'Barcode String:',
-            suffix: "EX: ATTFAATTFTADFDATDDADAATTTTTTTTADFFFFFDFAFATTDAADATDDDTADAFFDFDTFT",
             validate: (answer) => {
                 return !answer || /^[ADFT]{65}$/.test(answer)
                     ? true
@@ -195,13 +189,13 @@ async function promptForSpecifics(options) {
     const answers = await inquirer.prompt(questions);
     return _.pick({
         ...options,
-        barcode:        options.barcode || answers.barcode,
-        delivery_pt:    options.delivery_pt || answers.delivery_pt,
-        zip:            options.zip || answers.zip,
-        plus4:          options.plus4 || answers.plus4,
-        barcode_id:     options.barcode_id || answers.barcode_id,
-        service_type:   options.service_type || answers.service_type,
-        mailer_id:      options.mailer_id || answers.mailer_id,
-        serial_num:     options.serial_num || answers.serial_num
+        barcode:        options.barcode         || answers.barcode,
+        delivery_pt:    options.delivery_pt     || answers.delivery_pt,
+        zip:            options.zip             || answers.zip,
+        plus4:          options.plus4           || answers.plus4,
+        barcode_id:     options.barcode_id      || answers.barcode_id,
+        service_type:   options.service_type    || answers.service_type,
+        mailer_id:      options.mailer_id       || answers.mailer_id,
+        serial_num:     options.serial_num      || answers.serial_num
     }, _.identity);
 }
