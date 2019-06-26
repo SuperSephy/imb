@@ -1,0 +1,46 @@
+{
+  "name": "imb",
+  "version": "1.0.0",
+  "description": "Simple encoder and decoder for the United States Postal Service (USPS) Intelligent Mail Barcode (IMB) service.",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SuperSephy/imb.git"
+  },
+  "keywords": [
+    "USPS",
+    "IMB",
+    "encode",
+    "decode"
+  ],
+  "author": "Ross A. Boxall",
+  "license": "cc0-1.0",
+  "files": [
+    "dist/"
+  ],
+  "bugs": {
+    "url": "https://github.com/SuperSephy/imb/issues"
+  },
+  "homepage": "https://github.com/SuperSephy/imb#readme",
+  "dependencies": {
+    "async": "^3.1.0",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "grunt": "^1.0.4",
+    "grunt-babel": "^8.0.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "load-grunt-config": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=7.8.0"
+  }
+}
