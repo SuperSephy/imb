@@ -114,8 +114,8 @@ You should be able to encode an object using:
 ```shell
 $ imb
 ? Would you like to encode or decode an IMB? (Use arrow keys)
-    encode
-  ❯ decode
+  ❯ encode
+    decode
 ? Delivery Point 2-Characters (Optional):
 ? Zip (Optional):
 ? Zip Plus 4 (Optional):
