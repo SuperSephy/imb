@@ -22,16 +22,19 @@ const {
  * @returns {*}
  */
 module.exports = function decode(imb_string, callback) {
-    const decoded_imb = decode_barcode(imb_string);
 
+    if (callback)
+        return decode_barcode(imb_string, callback);
+
+    const decoded_imb = decode_barcode(imb_string);
     return callback
         ? callback(null, decoded_imb)
         : decoded_imb;
 };
 
 
-function decode_barcode(barcode) {
-    let chars, inf;
+function decode_barcode(barcode, callback) {
+    let chars, decoded_imb;
 
     barcode = cleanString(barcode);
 
@@ -39,8 +42,14 @@ function decode_barcode(barcode) {
         chars = textToCharacters(barcode, true);
 
         if (chars) {
-            inf = decodeCharacters(chars);
-            if (inf) return inf;  // decoded with no errors
+            decoded_imb = decodeCharacters(chars);
+
+            // decoded with no errors
+            if (decoded_imb) {
+                return callback
+                    ? callback(null, decoded_imb)
+                    : decoded_imb;
+            }
         }
     }
 
@@ -50,19 +59,19 @@ function decode_barcode(barcode) {
         throw new Error("Barcode must be 65 characters long");
     }
 
-    chars   = textToCharacters(barcode, false);
-    inf     = repairCharacters(chars);
+    chars       = textToCharacters(barcode, false);
+    decoded_imb = repairCharacters(chars);
 
-    if (inf) {
-        if (inf.suggest)
-            inf.highlight = findDiffs(barcode, inf.suggest);
-        return inf;
+    if (decoded_imb) {
+        if (decoded_imb.suggest)
+            decoded_imb.highlight = findDiffs(barcode, decoded_imb.suggest);
+        return decoded_imb;
     }
 
     barcode = flipBarcode(barcode);
     chars   = textToCharacters(barcode, false);
-    inf     = repairCharacters(chars);
-    if (inf && inf.barcode_id) {
+    decoded_imb     = repairCharacters(chars);
+    if (decoded_imb && decoded_imb.barcode_id) {
         if (callback) return callback("Barcode seems to be upside down");
         throw new Error("Barcode seems to be upside down");
     }

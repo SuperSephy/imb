@@ -46,8 +46,11 @@ function check_encode_input(encode_input, callback) {
     _.mapObject(encode_input, cleanString);
 
     // Zip Code is optional, but must be 5 | 9 digits
-    if (encode_input.zip && (!checkDigits(encode_input.zip, 5)))
+    if (encode_input.zip && (!checkDigits(encode_input.zip, 5))) {
         return "Zip code must be 5 digits";
+    } else {
+        encode_input.zip = "";
+    }
 
     // Zip Code may have separate plus four field
     if (encode_input.plus4) {
@@ -55,14 +58,16 @@ function check_encode_input(encode_input, callback) {
             return "Zip code is required if Zip Code plus4 is provided";
         if (!checkDigits(encode_input.plus4, 4))
             return "plus4 must be 4 digits";
+    } else {
+        encode_input.plus4 = "";
     }
 
     // Delivery Point Must be 2 digits
     if (encode_input.delivery_pt) {
-        if (encode_input.plus4 === "")
-            return "Zip+4 required";
         if (!checkDigits(encode_input.delivery_pt, 2))
             return "Delivery Point must be 2 digits";
+    } else {
+        encode_input.delivery_pt = "";
     }
 
     // Barcode ID must be 2 digits, second digit must be less than 4
