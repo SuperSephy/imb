@@ -1,6 +1,6 @@
 {
   "name": "imb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple encoder and decoder for the United States Postal Service (USPS) Intelligent Mail Barcode (IMB) service.",
   "main": "dist/index.js",
   "scripts": {
