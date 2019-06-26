@@ -1,8 +1,15 @@
 {
   "name": "imb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple encoder and decoder for the United States Postal Service (USPS) Intelligent Mail Barcode (IMB) service.",
   "main": "dist/index.js",
+  "bin": {
+    "@SuperSephy/imb": "bin/imb",
+    "imb": "bin/imb"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,11 +23,13 @@
     "USPS",
     "IMB",
     "encode",
-    "decode"
+    "decode",
+    "cli"
   ],
   "author": "Ross A. Boxall",
-  "license": "cc0-1.0",
+  "license": "CC0-1.0",
   "files": [
+    "bin/",
     "dist/"
   ],
   "bugs": {
@@ -28,7 +37,10 @@
   },
   "homepage": "https://github.com/SuperSephy/imb#readme",
   "dependencies": {
+    "arg": "^4.1.0",
     "async": "^3.1.0",
+    "esm": "^3.2.25",
+    "inquirer": "^6.4.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
