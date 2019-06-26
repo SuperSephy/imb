@@ -1,9 +1,11 @@
 # IMB
 
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-brightgreen.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
+![Version](https://img.shields.io/github/package-json/v/SuperSephy/imb.svg)
 ![Repo Size](https://img.shields.io/github/languages/code-size/SuperSephy/imb.svg)
-![Code Quality](https://img.shields.io/scrutinizer/quality/g/SuperSephy/imb.svg)
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/SuperSephy/imb.svg)](https://codeclimate.com/github/SuperSephy/imb)
+![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)
 
 Simple encoder and decoder for the USPS' IMB service based on:
 - [Bob Codes: IMB](http://bobcodes.weebly.com/imb.html)
@@ -96,7 +98,14 @@ imb.decode("ATTFAATTFTADFDATDDADAATTTTTTTTADFFFFFDFAFATTDAADATDDDTADAFFDFDTFT", 
     //  }
 });
 ```
+
 ## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
+Hey,
+ 
+I hope that you were able to find this module helpful.
+If so, let me know! Who doesn't love hearing that they made a difference, even if it's a little one.
+Don't worry, it's totally free - but if it really made a difference, you can send a little love using the link below :beers:!
+
+Cheers!
 
 [![Beerpay](https://beerpay.io/SuperSephy/imb/badge.svg?style=beer-square)](https://beerpay.io/SuperSephy/imb)  [![Beerpay](https://beerpay.io/SuperSephy/imb/make-wish.svg?style=flat-square)](https://beerpay.io/SuperSephy/imb?focus=wish)
